@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: load-balancer
+  name: telecon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: load-balancer
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: load-balancer
+    spec:
+      containers:
+      - image: docker.io/telecon:0.0.1-SNAPSHOT
+        name: telecon
+        ports:
+        - containerPort: 8080
