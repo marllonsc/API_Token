@@ -116,15 +116,31 @@ CREATE TABLE IF NOT EXISTS `db_telecon`.`line_has_person` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `db_telecon`.`request`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_telecon`.`request` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(100) NULL,
+  `status` VARCHAR(100) NULL,
+  `type_services_id` INT NOT NULL,
+  `line_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `type_services_id`, `line_id`),
+  INDEX `fk_request_type_services1_idx` (`type_services_id` ASC) VISIBLE,
+  INDEX `fk_request_line1_idx` (`line_id` ASC) VISIBLE,
+  CONSTRAINT `fk_request_type_services1`
+    FOREIGN KEY (`type_services_id`)
+    REFERENCES `db_telecon`.`type_services` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_request_line1`
+    FOREIGN KEY (`line_id`)
+    REFERENCES `db_telecon`.`line` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-
-INSERT INTO db_telecon.person (name,document,email)
-VALUES
-('admin', '000.000.000-00','admin@admin.com');
-
-INSERT INTO db_telecon.authentication (user,password,person_id)
-VALUES
-('admin','21232f297a57a5a743894a0e4a801fc3',id);
