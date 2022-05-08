@@ -16,6 +16,7 @@ public class AuthenticationService {
 	@Autowired
 	private AuthenticationRepository repository;
 	
+	@SuppressWarnings("deprecation")
 	public Authentication createAuthentication(Authentication authentication) {
 		if(StringUtils.isEmpty(authentication.getId())) {
 			authentication.setPassword(Md5Util.getMd5(authentication.getPassword()));
